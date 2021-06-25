@@ -10,7 +10,8 @@ async function signUp(req,res) {
     let user = await User.findOne({ email: req.body.email })
     if(user) return res.status(400).send("User is already registered.");
 
-    user = new User(_.pick(req.body, ["firstName", "lastName", "email", "password"]));
+    user = new User(_.pick(req.body, ["firstName", "email", "password"]));
+    if(req.body.lastName) user.lastName = req.body.lastName;
     if(req.baseUrl === "/api/admin") user.isAdmin = true;
     await user.save().catch(err => res.status(400).send(err));
     

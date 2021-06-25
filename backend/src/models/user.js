@@ -17,19 +17,18 @@ const userSchema = mongoose.Schema({
     },
     lastName: {
         type: String,
-        // required: true,
         trim: true,
         min: 1,
         max: 20
     },
-    userName: {
-        type: String,
-        // required: true,
-        trim: true,
-        unique: true,
-        index: true,
-        lowercase: true
-    },
+    // userName: {
+    //     type: String,
+    //     required: true,
+    //     trim: true,
+    //     unique: true,
+    //     index: true,
+    //     lowercase: true
+    // },
     email: {
         type: String,
         required: true,
@@ -58,7 +57,7 @@ userSchema.methods = {
         return bcrypt.compareSync(password, this.hashPassword);
     },
     generateAuthToken: function() {
-        const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+        const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, process.env.JWT_SECRET_KEY); //, { expiresIn: "1h" }
         return token;
     }
 }
